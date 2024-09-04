@@ -6,6 +6,8 @@ from llama_index.llms.openai import OpenAI
 from llama_index.core.tools import QueryEngineTool
 from llama_index.core.tools import FunctionTool
 from llama_index.core.agent import ReActAgent
+from llama_index.core.indices.query.query_transform import HyDEQueryTransform
+from llama_index.core.query_engine import TransformQueryEngine
 import os
 
 # Add llm to global settings
@@ -31,9 +33,11 @@ def load_index(input_files, persist_dir = "./storage") -> VectorStoreIndex:
 
 
 
+hyde = HyDEQueryTransform(include_original=True)
 
 sa_index = load_index(input_files=["data/sa_hard_part.pdf"], persist_dir="./storage/sa")
 sa_query_engine = sa_index.as_query_engine()
+sa_query_engine = TransformQueryEngine(sa_query_engine, hyde)
 sa_tool= QueryEngineTool.from_defaults(
   sa_query_engine,
   name="software_architecture",
@@ -46,6 +50,6 @@ agent = ReActAgent.from_tools(
 
 
 response = agent.chat(
-  "Can you describe horror story saga?"
+  "Can you rate horror story saga?"
 )
 print(response)
