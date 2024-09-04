@@ -1,17 +1,28 @@
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings, load_index_from_storage, StorageContext
+from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings, load_index_from_storage, StorageContext, set_global_handler
 from llama_index.llms.openai import OpenAI
 from llama_index.core.tools import QueryEngineTool
 from llama_index.core.tools import FunctionTool
 from llama_index.core.agent import ReActAgent
 from llama_index.core.indices.query.query_transform import HyDEQueryTransform
 from llama_index.core.query_engine import TransformQueryEngine
+from llama_index.core.callbacks import CallbackManager
+import phoenix as px
 import os
+
 
 # Add llm to global settings
 Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0)
+
+# setup observability
+callback_manager = CallbackManager()
+Settings.callback_manager = callback_manager
+px.launch_app()
+set_global_handler("arize_phoenix")
+
+
 
 def load_index(input_dir: str, persist_dir: str = "./storage") -> VectorStoreIndex:
   """
@@ -62,3 +73,9 @@ response = agent.chat(
   "Why binary-tree is not used in database?"
 )
 print(response)
+
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    print("Exiting...")
