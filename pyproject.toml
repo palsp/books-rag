@@ -11,6 +11,8 @@ dependencies = [
     "llama-index-llms-ollama>=0.3.0",
     "arize-phoenix>=4.33.0",
     "llama-index-callbacks-arize-phoenix>=0.2.1",
+    "ebooklib>=0.18",
+    "html2text>=2024.2.26",
 ]
 
 [build-system]

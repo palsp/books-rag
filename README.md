@@ -14,26 +14,19 @@ This project operates as a Retrieval-Augmented Generation (RAG) system, specific
 
 ### Steps
 
-1. **Clone the repository:**
-
-   ```sh
-   git clone https://github.com/yourusername/software-books-rag-agent.git
-   cd software-books-rag-agent
-   ```
-
-2. **Install uv (if not already installed):**
+1. **Install uv (if not already installed):**
 
    ```sh
    pip install uv
    ```
 
-3. **Create a virtual environment and install dependencies:**
+2. **Create a virtual environment and install dependencies:**
 
    ```sh
    uv sync
    ```
 
-4. **Set up environment variables:**
+3. **Set up environment variables:**
 
    Create a `.env` file in the root directory of the project and add your OpenAI API key:
 
@@ -41,7 +34,7 @@ This project operates as a Retrieval-Augmented Generation (RAG) system, specific
    OPENAI_API_KEY=your_openai_api_key
    ```
 
-5. **Run the project:**
+4. **Run the project:**
 
    ```sh
    uv run src/main.py

@@ -14,13 +14,13 @@ import os
 
 
 # Add llm to global settings
-Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0)
+Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=1024)
 
 # setup observability
-callback_manager = CallbackManager()
-Settings.callback_manager = callback_manager
-px.launch_app()
-set_global_handler("arize_phoenix")
+# callback_manager = CallbackManager()
+# Settings.callback_manager = callback_manager
+# px.launch_app()
+# set_global_handler("arize_phoenix")
 
 
 
@@ -46,36 +46,14 @@ def load_index(input_dir: str, persist_dir: str = "./storage") -> VectorStoreInd
 
 hyde = HyDEQueryTransform(include_original=True)
 
-sa_index = load_index(input_dir="data/software_architecture", persist_dir="./storage/software_architecture")
-sa_query_engine = sa_index.as_query_engine()
-sa_query_engine = TransformQueryEngine(sa_query_engine, hyde)
-sa_tool= QueryEngineTool.from_defaults(
-  sa_query_engine,
-  name="software_architecture",
-  description="A specialized query engine for Software Architecture. Provides detailed information on advanced software architecture concepts, trade-offs, patterns, and practices. Use for questions about architectural decisions, distributed systems design, and handling complexity in large-scale software systems."
+index = load_index(input_dir="data", persist_dir="./storage")
+chat_engine = index.as_chat_engine(
+    chat_mode="react"
 )
+chat_engine.chat_repl()
 
-db_index = load_index(input_dir="data/database", persist_dir="./storage/database")
-db_query_engine = db_index.as_query_engine()
-db_query_engine = TransformQueryEngine(db_query_engine, hyde)
-db_tool= QueryEngineTool.from_defaults(
-  db_query_engine,
-  name="database",
-  description="A specialized query engine for Database. Provides detailed information on advanced database concepts, trade-offs, patterns, and practices. Use for questions about database design and internal concepts."
-)
-
-agent = ReActAgent.from_tools(
-    [sa_tool, db_tool], verbose=True
-)
-
-
-response = agent.chat(
-  "Why binary-tree is not used in database?"
-)
-print(response)
-
-try:
-    while True:
-        pass
-except KeyboardInterrupt:
-    print("Exiting...")
+# try:
+#     while True:
+#         pass
+# except KeyboardInterrupt:
+#     print("Exiting...")
