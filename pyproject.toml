@@ -3,7 +3,7 @@ name = "books-rag"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.13"
 dependencies = [
     "llama-index-llms-openai>=0.2.0",
     "python-dotenv>=1.0.1",
@@ -13,6 +13,7 @@ dependencies = [
     "llama-index-callbacks-arize-phoenix>=0.2.1",
     "ebooklib>=0.18",
     "html2text>=2024.2.26",
+    "ipykernel>=6.29.5",
 ]
 
 [build-system]
