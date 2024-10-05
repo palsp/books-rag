@@ -12,7 +12,7 @@ from llama_index.core.tools import QueryEngineTool
 from llama_index.core.callbacks import LlamaDebugHandler, CallbackManager
 import sys
 import os
-from logger import Logger
+from libs.logger import Logger
 
 
 # Add llm to global settings

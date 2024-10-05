@@ -14,8 +14,7 @@ dependencies = [
     "ebooklib>=0.18",
     "html2text>=2024.2.26",
     "ipykernel>=6.29.5",
+    "flask>=3.0.3",
+    "uvicorn>=0.30.6",
+    "snakeviz>=2.2.0",
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
